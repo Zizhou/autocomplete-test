@@ -1,0 +1,42 @@
+{% extends 'mybase.html' %}
+{% block head %}
+<style>
+div.box { background-color:#F7C6EA;float:left;margin:5px;padding:5px; }
+</style>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'complete/jquery-autocomplete.js' %}"></script>
+<link rel='stylesheet' type='text/css' href="{% static 'complete/style.css' %}"/>
+
+{% endblock %}
+{% block pagetitle %}
+Auto Complete Test
+{% endblock %}
+
+
+{% block body %}
+<script>
+//auto complete stuff(god help me) 
+$(document).ready(function(){
+    var gibberish = ['aaa', 'aab', 'aac', 'aba', 'aca', 'baa', 'caa', 'abc', 'aabc']
+    $("#autocomplete").autocomplete({
+        lookup: gibberish,
+        onSelect: function(selected){
+            alert('how alarming!' + selected.value);
+        }
+
+    });
+});
+</script>
+
+
+
+<div class='container'>
+    <div class = 'box'>
+
+    <input placeholder='type here!' type='text' name='searchbox' id='autocomplete'>
+    </div>
+
+    <div style= 'clear:both'></div>
+</div>
+{% endblock %}
+
