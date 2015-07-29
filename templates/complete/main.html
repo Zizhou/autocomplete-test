@@ -17,11 +17,28 @@ Auto Complete Test
 <script>
 //auto complete stuff(god help me) 
 $(document).ready(function(){
-    var gibberish = ['aaa', 'aab', 'aac', 'aba', 'aca', 'baa', 'caa', 'abc', 'aabc']
+    //var gibberish = ['aaa', 'aab', 'aac', 'aba', 'aca', 'baa', 'caa', 'abc', 'aabc']
     $("#autocomplete").autocomplete({
-        lookup: gibberish,
+        //lookup: gibberish,
+        serviceUrl: 'api/search',//need to figure out how to template this
+        transformResult: function(response){
+            console.log('response', response);
+            var parsed = JSON.parse(response);        
+            console.log('suggestions', parsed.suggestions);
+            return {
+                suggestions: $.map(parsed.suggestions, function(dataItem){
+                    return {
+                        value: dataItem.fields.name,
+                        data: dataItem.pk
+                    }
+                })
+            };
+        },
         onSelect: function(selected){
-            alert('how alarming!' + selected.value);
+            //$('#infobox').html('You selected ' + selected.value + ' ' + selected.data );
+            $.get('api/get_id/' + selected.data, function(data){
+                $('#infobox').html(data);
+            });
         }
 
     });
@@ -37,6 +54,9 @@ $(document).ready(function(){
     </div>
 
     <div style= 'clear:both'></div>
+</div>
+
+<div id = 'infobox'>
 </div>
 {% endblock %}
 
