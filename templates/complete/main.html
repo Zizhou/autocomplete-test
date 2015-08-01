@@ -20,7 +20,7 @@ $(document).ready(function(){
     //var gibberish = ['aaa', 'aab', 'aac', 'aba', 'aca', 'baa', 'caa', 'abc', 'aabc']
     $("#autocomplete").autocomplete({
         //lookup: gibberish,
-        serviceUrl: 'api/search',//need to figure out how to template this
+        serviceUrl:'{% url "complete:api_search" %}',
         transformResult: function(response){
             console.log('response', response);
             var parsed = JSON.parse(response);        
@@ -36,7 +36,7 @@ $(document).ready(function(){
         },
         onSelect: function(selected){
             //$('#infobox').html('You selected ' + selected.value + ' ' + selected.data );
-            $.get('api/get_id/' + selected.data, function(data){
+            $.get('{% url "complete:none" %}' + selected.data, function(data){
                 $('#infobox').html(data);
             });
         }
